@@ -3,7 +3,6 @@
 namespace ExerciseBook\DiscuzQCloudinary;
 
 use CarlosOCarvalho\Flysystem\Cloudinary\CloudinaryAdapter as Adapter;
-use Discuz\Http\UrlGenerator;
 use League\Flysystem\Adapter\CanOverwriteFiles;
 
 /**
@@ -37,7 +36,8 @@ class CloudinaryAdapter extends Adapter implements CanOverwriteFiles
      */
     public function getUrl($path)
     {
-        //TODO 得改，感觉有点问题。
-        return 'https://res.cloudinary.com/' . $this->config['cloud_name'] . '/image/upload/' . $path;
+        //TODO 还得改
+        $s = $this->api->resources_by_ids($path);
+        return $s['resources'][0]['secure_url'];
     }
 }
