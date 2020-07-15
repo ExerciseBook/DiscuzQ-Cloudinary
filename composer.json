@@ -1,0 +1,29 @@
+{
+	"name": "exercisebook/discuzq-cloudinary",
+	"description": "Cloudinary Adaptor for DiscuzQ",
+	"type": "library",
+	"authors": [
+		{
+			"name": "Eric_Lian",
+			"email": "public@superexercisebook.com"
+		}
+	],
+	"require": {
+		"carlosocarvalho/flysystem-cloudinary": ">=1.1",
+		"discuz/core": ">=v1.0.200710"
+	},
+	"license": "MIT",
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://cloud.discuz.chat"
+		}
+	],
+	"version": "0.0.1",
+	"minimum-stability": "stable",
+	"autoload": {
+		"psr-4": {
+			"ExerciseBook\\DiscuzQCloudinary\\": "src/"
+		}
+	}
+}
