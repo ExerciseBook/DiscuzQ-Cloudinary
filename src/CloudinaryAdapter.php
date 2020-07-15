@@ -37,6 +37,7 @@ class CloudinaryAdapter extends Adapter implements CanOverwriteFiles
      */
     public function getUrl($path)
     {
-        return 'https://res.cloudinary.com/' . $this->config['cloud_name'] . '/upload' . $path;
+        //TODO 得改，感觉有点问题。
+        return 'https://res.cloudinary.com/' . $this->config['cloud_name'] . '/image/upload/' . $path;
     }
 }
