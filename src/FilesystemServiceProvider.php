@@ -34,20 +34,12 @@ class FilesystemServiceProvider extends ServiceProvider
                 throw new Exception("No filesystem configuration declared.");
             }
 
-            // 找到配置
             $cloudinary_config = Arr::get($filesystem_config, 'disks.cloudinary', null);
 
-            // 找到备份配置
-            $default_config =  Arr::get($filesystem_config, 'default', 'local');
-            $fallback_config = Arr::get($cloudinary_config, 'fallback', $default_config);
-
-            // 确认备份配置
-            $fallback_config = Arr::get($filesystem_config, 'disks.local', null);
-            if ($fallback_config === null) {
-                throw new Exception("No fallback configuration");
+            if ($cloudinary_config === null) {
+                throw new Exception("No Cloudinary configuration Found.");
             }
 
-            $LocalAdapter = new LocalAdapter($fallback_config);
             $CloudinaryAdapter = new CloudinaryAdapter($cloudinary_config);
 
             return new Filesystem($CloudinaryAdapter);
