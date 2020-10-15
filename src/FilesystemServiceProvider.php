@@ -2,7 +2,6 @@
 
 namespace ExerciseBook\DiscuzQCloudinary;
 
-use Discuz\Fileystem\LocalAdapter;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Filesystem\FilesystemServiceProvider as ServiceProvider;
