@@ -5,7 +5,7 @@ Discuz Q Cloudinary 存储支持
 1. 使用指令 `composer require exercisebook/discuzq-cloudinary` 下载本库。
 2. 在 `config/config.php` 中的 `providers` 添加 `ExerciseBook\DiscuzQCloudinary\FilesystemServiceProvider::class` 使得 DiscuzQ 可以正常加载本库。
 3. 在 `config/config.php` 中的 `filesystems.disks` 添加您的 Cloudinary 登陆信息。
-    ```
+    ```php
     'cloudinary' => [
         'driver'        => 'cloudinary',
         'cloud_name'    => 'XXX',
