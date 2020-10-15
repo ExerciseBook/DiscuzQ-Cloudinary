@@ -4,8 +4,10 @@ namespace ExerciseBook\DiscuzQCloudinary;
 
 use CarlosOCarvalho\Flysystem\Cloudinary\CloudinaryAdapter as Adapter;
 use Cloudinary\Api\GeneralError;
+use Exception;
 use Illuminate\Cache\Repository;
 use League\Flysystem\Adapter\CanOverwriteFiles;
+use app\Models\Attachment;
 
 /**
  * Class LocalAdapter
@@ -57,8 +59,25 @@ class CloudinaryAdapter extends Adapter implements CanOverwriteFiles
         }
 
         // 无缓存
-        $s = $this->api->resources_by_ids($path);
-        $ret = $s['resources'][0]['secure_url'];
+        $attachment = Attachment::query()
+            ->whereRaw("concat(file_path, attachment) = ?", [$path])
+            ->orWhereRaw('concat(file_path, "/", attachment) = ?', [$path])
+            ->first();
+        $type = explode('/', $attachment->file_type)[0];
+        switch ($type) {
+            case "image" : $type = "image"; break;
+
+            case "audio" :
+            case "video" : $type = "video"; break;
+
+            default : $type = "raw";
+        }
+        $s = $this->api->resources_by_ids($path, ["resource_type" => $type]);
+        try {
+            $ret = $s['resources'][0]['secure_url'];
+        } catch (Exception $e) {
+            $ret = $path;
+        }
 
         // 写入缓存
         $cache->put($cache_key, $ret, 60 * 60 * 24);
