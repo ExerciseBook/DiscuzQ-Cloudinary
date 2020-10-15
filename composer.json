@@ -1,6 +1,6 @@
 {
 	"name": "exercisebook/discuzq-cloudinary",
-	"description": "Cloudinary Adaptor for DiscuzQ",
+	"description": "Cloudinary Adapter for DiscuzQ",
 	"type": "library",
 	"authors": [
 		{
@@ -10,7 +10,7 @@
 	],
 	"require": {
 		"carlosocarvalho/flysystem-cloudinary": ">=1.1",
-		"discuz/core": ">=v1.0.200710"
+		"discuz/core": ">=v2.0.201001"
 	},
 	"license": "MIT",
 	"repositories": [
@@ -19,8 +19,8 @@
 			"url": "https://cloud.discuz.chat"
 		}
 	],
-	"version": "0.0.1",
-	"minimum-stability": "stable",
+	"version": "0.1.0",
+	"minimum-stability": "alpha",
 	"autoload": {
 		"psr-4": {
 			"ExerciseBook\\DiscuzQCloudinary\\": "src/"

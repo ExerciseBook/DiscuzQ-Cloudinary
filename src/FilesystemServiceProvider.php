@@ -22,7 +22,6 @@ class FilesystemServiceProvider extends ServiceProvider
         return (Arr::get(app()['discuz.config'], $string, $default));
     }
 
-
     /**
      * @throws BindingResolutionException
      * @throws Exception
