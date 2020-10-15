@@ -2,8 +2,9 @@
 
 namespace ExerciseBook\DiscuzQCloudinary;
 
-use Discuz\Contracts\Setting\SettingsRepository;
-use Discuz\Filesystem\LocalAdapter;
+use Discuz\Fileystem\LocalAdapter;
+use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Filesystem\FilesystemServiceProvider as ServiceProvider;
 use Illuminate\Support\Arr;
 use League\Flysystem\Filesystem;
@@ -23,7 +24,8 @@ class FilesystemServiceProvider extends ServiceProvider
 
 
     /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     * @throws BindingResolutionException
+     * @throws Exception
      */
     public function boot()
     {

@@ -3,6 +3,8 @@
 namespace ExerciseBook\DiscuzQCloudinary;
 
 use CarlosOCarvalho\Flysystem\Cloudinary\CloudinaryAdapter as Adapter;
+use Cloudinary\Api\GeneralError;
+use Illuminate\Cache\Repository;
 use League\Flysystem\Adapter\CanOverwriteFiles;
 
 /**
@@ -20,7 +22,6 @@ class CloudinaryAdapter extends Adapter implements CanOverwriteFiles
      * CloudinaryAdapter constructor.
      *
      * @param array $config
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function __construct(array $config = [])
     {
@@ -29,15 +30,39 @@ class CloudinaryAdapter extends Adapter implements CanOverwriteFiles
     }
 
     /**
+     * @return Repository
+     */
+    public function getCacheRepository(){
+        // TODO 可能会有更优雅的写法
+        $cache = app()['cache'];
+        return $cache->driver($cache->getDefaultDriver());
+    }
+
+    /**
      * 获取本地 图片/附件 Url地址
      *
      * @param $path
      * @return mixed
+     * @throws GeneralError
      */
     public function getUrl($path)
     {
-        //TODO 还得改
+        $cache = $this->getCacheRepository();
+        $cache_key = "cloudinary-url-cache-".$path;
+
+        // 有缓存
+        $cache_date = $cache->get($cache_key, null);
+        if ($cache_date != null) {
+            return $cache_date;
+        }
+
+        // 无缓存
         $s = $this->api->resources_by_ids($path);
-        return $s['resources'][0]['secure_url'];
+        $ret = $s['resources'][0]['secure_url'];
+
+        // 写入缓存
+        $cache->put($cache_key, $ret, 60 * 60 * 24);
+
+        return $ret;
     }
 }
